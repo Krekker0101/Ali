@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://ali.com">
-    <img src="https://github.com/Krekker0101/Ali/docs/images/logo.png" alt="Ali" width="200"/>
+  <a href="https://github.com/Krekker0101/Ali">
+    <img src="docs/images/logo.png" alt="Ali" width="200"/>
   </a>
 </p>
 
