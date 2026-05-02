@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://ali.com">
-    <img src="https://github.com/ollama/ollama/assets/3325447/0d0b44e2-8f4a-4e99-9b52-a5c1c741c8f7" alt="Ali" width="200"/>
+    <img src="https://github.com/Krekker0101/Ali/app/assets/app.ico" alt="Ali" width="200"/>
   </a>
 </p>
 
@@ -513,19 +513,53 @@ console.log(response.message.content);
 
 ### Infrastructure & Deployment
 
-#### Cloud
 
-- [Google Cloud](https://cloud.google.com/run/docs/tutorials/gpu-gemma2-with-ollama)
-- [Fly.io](https://fly.io/docs/python/do-more/add-ollama/)
-- [Koyeb](https://www.koyeb.com/deploy/ollama)
-- [Harbor](https://github.com/av/harbor) - Containerized LLM toolkit with Ollama as default backend
+## 👨‍💻 AUTHOR & MAINTAINER
 
-#### Package Managers
+<p align="center">
+  <a href="https://tajik-develop.yzz.me">
+    <img src="https://img.shields.io/badge/🌐_PORTFOLIO-tajik--develop.yzz.me-0f172a?style=for-the-badge&logo=firefoxbrowser&logoColor=white&labelColor=1e293b" alt="Portfolio" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://github.com/Krekker0101">
+    <img src="https://img.shields.io/badge/🐙_GITHUB-Krekker0101-0f172a?style=for-the-badge&logo=github&logoColor=white&labelColor=1e293b" alt="GitHub" />
+  </a>
+</p>
 
-- [Pacman](https://archlinux.org/packages/extra/x86_64/ollama/)
-- [Homebrew](https://formulae.brew.sh/formula/ollama)
-- [Nix package](https://search.nixos.org/packages?show=ollama&from=0&size=50&sort=relevance&type=packages&query=ollama)
-- [Helm Chart](https://artifacthub.io/packages/helm/ollama-helm/ollama)
-- [Gentoo](https://github.com/gentoo/guru/tree/master/app-misc/ollama)
-- [Flox](https://flox.dev/blog/ollama-part-one)
-- [Guix channel](https://codeberg.org/tusharhero/ollama-guix)
+<br/>
+
+<div align="center">
+  <table style="border-collapse: collapse; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 24px; padding: 30px 40px; border: 1px solid #334155; display: inline-block;">
+    <tr>
+      <td align="center" style="padding: 30px 50px;">
+        <span style="font-size: 56px;">🧑‍💻</span>
+        <br/>
+        <span style="font-size: 2.2em; font-weight: 700; background: linear-gradient(135deg, #38bdf8 0%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Abdulloh Ashurov</span>
+        <br/>
+        <span style="color: #94a3b8; font-size: 1.2em; letter-spacing: 1px;">Creator & Lead Developer</span>
+        <br/><br/>
+        <span style="color: #e2e8f0;">Building tools that respect user freedom and desktop workflow.</span>
+        <br/><br/>
+        <a href="mailto:abdulloh@tajik.dev">
+          <img src="https://img.shields.io/badge/abdulloh@tajik.dev-0f172a?style=flat-square&logo=protonmail&logoColor=white&labelColor=1e293b" alt="Email" />
+        </a>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<br/>
+
+<p align="center">
+  <span style="font-size: 2.8em; font-weight: 800; letter-spacing: 6px; background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Tajik.Dev</span>
+  <br/>
+  <span style="color: #64748b; font-size: 1em; letter-spacing: 3px;">— WHERE CODE MEETS CRAFT —</span>
+</p>
+
+<p align="center" style="max-width: 700px; margin: 0 auto; color: #94a3b8; font-size: 0.95em;">
+  <strong>Tajik.Dev</strong> is an independent software studio crafting desktop‑native tools, 
+  local‑first applications, and developer experiences that prioritize user control 
+  over convenience. Founded and operated by Abdulloh Ashurov.
+</p>
+
+<br/>
