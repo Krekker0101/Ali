@@ -1,10 +1,10 @@
 ﻿{
     "name":  "AliWebSetup",
     "version":  "1.0.0.0",
-    "created_at":  "2026-05-02T18:10:35.8816081+05:00",
+    "created_at":  "2026-05-02T18:26:03.4874953+05:00",
     "output":  "D:\\GO-Lessons\\pro-go\\ollama-main\\dist\\AliWebSetup.exe",
-    "size":  33493504,
-    "sha256":  "545F952396E2403C7CA39E50CE7E740B781698497B3286E92E6E9D7AD47041BF",
+    "size":  33495040,
+    "sha256":  "C6457D09DBE9233ADB15A43A3147827A19C524D3BF734717F8BFA91751914F34",
     "embedded":  [
                      "bootstrap.ps1",
                      "source.zip",

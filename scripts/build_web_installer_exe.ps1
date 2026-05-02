@@ -276,6 +276,10 @@ internal static class AliWebSetup
             {
                 return SelfTest();
             }
+            if (HasArg(args, "--ui-self-test"))
+            {
+                return UiSelfTest();
+            }
 
             if (!HasArg(args, "--elevated") && !IsAdministrator())
             {
@@ -284,14 +288,15 @@ internal static class AliWebSetup
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            SetupForm form = new SetupForm();
+            SetupForm form = new SetupForm(true);
             Application.Run(form);
             return form.ExitCode;
         }
         catch (Exception ex)
         {
+            string logPath = WriteStartupFailure(ex);
             MessageBox.Show(
-                "Ali installation could not start." + Environment.NewLine + ex.Message,
+                "Ali installation could not start." + Environment.NewLine + ex.Message + Environment.NewLine + "Log: " + logPath,
                 "Ali Web Setup",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
@@ -353,6 +358,33 @@ internal static class AliWebSetup
         return File.Exists(Path.Combine(workRoot, "bootstrap.ps1")) && File.Exists(Path.Combine(workRoot, "source.zip")) && File.Exists(Path.Combine(workRoot, "app.ico")) ? 0 : 1;
     }
 
+    private static int UiSelfTest()
+    {
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        using (SetupForm form = new SetupForm(false))
+        {
+            form.CreateControl();
+            form.Show();
+            Application.DoEvents();
+            form.Close();
+        }
+        return 0;
+    }
+
+    private static string WriteStartupFailure(Exception ex)
+    {
+        string logPath = Path.Combine(Path.GetTempPath(), "AliWebSetup-startup.log");
+        try
+        {
+            File.AppendAllText(logPath, DateTime.Now.ToString("s") + Environment.NewLine + ex.ToString() + Environment.NewLine + Environment.NewLine, Encoding.UTF8);
+        }
+        catch
+        {
+        }
+        return logPath;
+    }
+
     internal static void ExtractResource(string resourceName, string outputPath)
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
@@ -372,15 +404,25 @@ internal static class AliWebSetup
 
     internal static Icon LoadAppIcon()
     {
-        Assembly assembly = Assembly.GetExecutingAssembly();
-        using (Stream input = assembly.GetManifestResourceStream("app.ico"))
+        try
         {
-            if (input == null)
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            using (Stream input = assembly.GetManifestResourceStream("app.ico"))
             {
-                return null;
-            }
+                if (input == null)
+                {
+                    return (Icon)SystemIcons.Application.Clone();
+                }
 
-            return new Icon(input);
+                using (Icon icon = new Icon(input))
+                {
+                    return (Icon)icon.Clone();
+                }
+            }
+        }
+        catch
+        {
+            return (Icon)SystemIcons.Application.Clone();
         }
     }
 
@@ -458,12 +500,14 @@ internal sealed class SetupForm : Form
     private readonly Button closeButton;
     private readonly string workRoot;
     private readonly string installLog;
+    private readonly bool autoStart;
     private int progressValue;
 
     public int ExitCode { get; private set; }
 
-    public SetupForm()
+    public SetupForm(bool autoStart)
     {
+        this.autoStart = autoStart;
         ExitCode = 1;
         workRoot = Path.Combine(Path.GetTempPath(), "AliWebSetup-" + Guid.NewGuid().ToString("N"));
         installLog = Path.Combine(workRoot, "install.log");
@@ -609,6 +653,15 @@ internal sealed class SetupForm : Form
 
     private void LayoutControls()
     {
+        if (heroPanel == null || logPanel == null || titleLabel == null || closeButton == null)
+        {
+            return;
+        }
+        if (ClientSize.Width <= 0 || ClientSize.Height <= 0)
+        {
+            return;
+        }
+
         int margin = 28;
         int heroHeight = 168;
         int buttonHeight = 38;
@@ -637,6 +690,15 @@ internal sealed class SetupForm : Form
     protected override void OnShown(EventArgs e)
     {
         base.OnShown(e);
+        if (!autoStart)
+        {
+            ExitCode = 0;
+            SetProgress(100, "UI self-test");
+            SetStatus("Installer UI self-test passed.");
+            EnableClose();
+            return;
+        }
+
         Thread worker = new Thread(RunInstallation);
         worker.IsBackground = true;
         worker.Start();
@@ -816,11 +878,16 @@ internal sealed class GlassPanel : Panel
         FillColor = Color.FromArgb(42, 255, 255, 255);
         StrokeColor = Color.FromArgb(70, 255, 255, 255);
         DoubleBuffered = true;
-        SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true);
+        SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
     }
 
     protected override void OnPaint(PaintEventArgs e)
     {
+        if (Width <= 1 || Height <= 1)
+        {
+            return;
+        }
+
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
         Rectangle rect = new Rectangle(0, 0, Width - 1, Height - 1);
         using (GraphicsPath path = RoundedRect(rect, Radius))
@@ -862,7 +929,7 @@ internal sealed class ProgressStrip : Control
         Accent = Color.FromArgb(87, 153, 255);
         Accent2 = Color.FromArgb(122, 92, 255);
         DoubleBuffered = true;
-        SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true);
+        SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
 
         timer = new System.Windows.Forms.Timer();
         timer.Interval = 32;
@@ -894,6 +961,11 @@ internal sealed class ProgressStrip : Control
 
     protected override void OnPaint(PaintEventArgs e)
     {
+        if (Width <= 1 || Height <= 1)
+        {
+            return;
+        }
+
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
         Rectangle rect = new Rectangle(0, 0, Width - 1, Height - 1);
         using (GraphicsPath trackPath = RoundedRect(rect, Height / 2))
@@ -971,7 +1043,7 @@ internal sealed class ProgressRing : Control
         Accent = Color.FromArgb(87, 153, 255);
         Accent2 = Color.FromArgb(122, 92, 255);
         DoubleBuffered = true;
-        SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true);
+        SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
 
         timer = new System.Windows.Forms.Timer();
         timer.Interval = 32;
@@ -1003,6 +1075,11 @@ internal sealed class ProgressRing : Control
 
     protected override void OnPaint(PaintEventArgs e)
     {
+        if (Width <= 20 || Height <= 20)
+        {
+            return;
+        }
+
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
         Rectangle rect = new Rectangle(7, 7, Width - 15, Height - 15);
         Color main = failed ? Color.FromArgb(255, 98, 112) : Accent;
