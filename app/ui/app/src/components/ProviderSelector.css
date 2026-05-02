@@ -1,0 +1,152 @@
+.provider-selector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 12px;
+}
+
+.provider-buttons {
+  display: flex;
+  gap: 4px;
+  background: #3e3e42;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.provider-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: transparent;
+  border: none;
+  color: #cccccc;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.provider-btn:hover {
+  background: #555555;
+  color: #fff;
+}
+
+.provider-btn.active {
+  background: #0e639c;
+  color: #fff;
+}
+
+.provider-btn .icon {
+  font-size: 14px;
+}
+
+.model-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.model-selector label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #cccccc;
+  white-space: nowrap;
+}
+
+.model-select {
+  background: #3e3e42;
+  border: 1px solid #555555;
+  color: #e0e0e0;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  min-width: 200px;
+}
+
+.model-select:focus {
+  outline: none;
+  border-color: #0e639c;
+  box-shadow: 0 0 0 1px #0e639c;
+}
+
+.model-select option {
+  background: #252526;
+  color: #e0e0e0;
+}
+
+.model-status {
+  display: flex;
+  align-items: center;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.local {
+  background: #1d3d1d;
+  color: #4ade80;
+}
+
+.status-badge.cloud {
+  background: #1d3d5c;
+  color: #38bdf8;
+}
+
+.status-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.provider-info {
+  position: fixed;
+  bottom: 0;
+  right: 350px;
+  background: rgba(30, 30, 30, 0.95);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  color: #cccccc;
+  max-width: 250px;
+  display: none;
+  border: 1px solid #3e3e42;
+  z-index: 1000;
+  line-height: 1.4;
+}
+
+.provider-info p {
+  margin: 0;
+}
+
+.provider-info strong {
+  color: #fff;
+}
+
+/* Show на hover */
+.provider-selector:hover .provider-info {
+  display: block;
+}

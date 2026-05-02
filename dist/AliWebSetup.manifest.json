@@ -1,0 +1,32 @@
+﻿{
+    "name":  "AliWebSetup",
+    "version":  "1.0.0.0",
+    "created_at":  "2026-05-02T17:32:29.0650532+05:00",
+    "output":  "D:\\GO-Lessons\\pro-go\\ollama-main\\dist\\AliWebSetup.exe",
+    "size":  33251328,
+    "sha256":  "EA6694351D8810C8FFFFA797D8EFFA5F869C34DCB6B2E1A5C72717D0320701D5",
+    "embedded":  [
+                     "bootstrap.ps1",
+                     "source.zip",
+                     "app.ico"
+                 ],
+    "default_model":  "",
+    "preload_model":  false,
+    "cpu_only":  true,
+    "installer_behavior":  [
+                               "show modern dark Ali Setup progress window",
+                               "show percentage progress by installation stage",
+                               "show animated circular progress indicator",
+                               "show smooth determinate progress line",
+                               "self-elevate through Windows UAC when needed",
+                               "extract embedded source",
+                               "install missing build tools with winget",
+                               "build AliSetup.exe",
+                               "install Ali silently",
+                               "start local server",
+                               "do not download models by default",
+                               "download model only when built with -PreloadModel",
+                               "run post-install release verification",
+                               "open IDE unless disabled"
+                           ]
+}

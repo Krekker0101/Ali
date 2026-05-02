@@ -1,0 +1,136 @@
+.task-monitor-container {
+  padding: 12px;
+  border-top: 1px solid #3e3e42;
+  background: #2d2d30;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.task-monitor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.task-monitor-header h4 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.task-count {
+  background: #0e639c;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 11px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-item {
+  background: #1e1e1e;
+  border-left: 3px solid #0e639c;
+  border-radius: 3px;
+  padding: 8px;
+  font-size: 11px;
+}
+
+.task-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.task-icon {
+  font-size: 12px;
+  min-width: 16px;
+  text-align: center;
+}
+
+.task-name {
+  flex: 1;
+  color: #e0e0e0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-time {
+  color: #858585;
+  font-size: 10px;
+  min-width: 40px;
+  text-align: right;
+}
+
+.task-progress {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 4px;
+  background: #3e3e42;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #0e639c;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  color: #858585;
+  font-size: 10px;
+  min-width: 30px;
+  text-align: right;
+}
+
+.task-output {
+  margin-top: 6px;
+  padding: 6px;
+  background: #1e1e1e;
+  border-radius: 2px;
+  border-left: 2px solid #0e639c;
+  max-height: 80px;
+  overflow-y: auto;
+}
+
+.task-output pre {
+  margin: 0;
+  font-size: 10px;
+  color: #d4d4d4;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  line-height: 1.3;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.task-item {
+  animation: slideIn 0.2s ease-out;
+}

@@ -1,0 +1,145 @@
+.editor-container-new {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #1e1e1e;
+}
+
+.editor-header-new {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: #2d2d30;
+  border-bottom: 1px solid #3e3e42;
+  gap: 12px;
+}
+
+.editor-info-new {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.file-name-new {
+  font-weight: 600;
+  color: #fff;
+  font-size: 13px;
+}
+
+.file-lang-new {
+  background: #0e639c;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.file-stats-new {
+  color: #858585;
+  font-size: 12px;
+}
+
+.editor-actions-new {
+  display: flex;
+  gap: 8px;
+}
+
+.editor-btn-new {
+  padding: 4px 12px;
+  background: #0e639c;
+  border: none;
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background-color 0.1s;
+  white-space: nowrap;
+}
+
+.editor-btn-new:hover {
+  background: #1177bb;
+}
+
+.editor-wrapper-new {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  background: #1e1e1e;
+  position: relative;
+}
+
+.line-numbers-new {
+  background: #1e1e1e;
+  border-right: 1px solid #3e3e42;
+  padding: 8px 12px;
+  text-align: right;
+  color: #858585;
+  user-select: none;
+  overflow: hidden;
+  min-width: 50px;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.line-number-new {
+  height: 1.5em;
+  font-size: 13px;
+}
+
+.editor-textarea-new {
+  flex: 1;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  border: none;
+  padding: 8px 12px;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  resize: none;
+  outline: none;
+  overflow: auto;
+  white-space: pre;
+  word-wrap: normal;
+}
+
+.editor-textarea-new:focus {
+  background: #1e1e1e;
+}
+
+.editor-textarea-new:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.editor-status-new {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 12px;
+  background: #007acc;
+  border-top: 1px solid #3e3e42;
+  font-size: 12px;
+  color: #fff;
+}
+
+.status-item-new {
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.status-item-new span {
+  display: inline-block;
+  min-width: 80px;
+  text-align: right;
+}
+
+/* VS Code like syntax highlighting colors */
+.editor-textarea-new::selection {
+  background: #264f78;
+}

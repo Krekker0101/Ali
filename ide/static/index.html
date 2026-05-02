@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ollama IDE</title>
+    <link rel="stylesheet" href="/ide/assets/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">AI</span>
+          <span>Ollama IDE</span>
+        </div>
+        <form id="workspaceForm" class="workspace-form">
+          <input id="workspacePath" type="text" spellcheck="false" placeholder="Project folder path" />
+          <button type="submit">Open</button>
+        </form>
+        <div class="top-actions">
+          <select id="providerSelect" title="AI provider">
+            <option value="local">Local</option>
+            <option value="cloud">Cloud</option>
+          </select>
+          <select id="modelSelect" title="Model"></select>
+          <button id="settingsButton" type="button">Settings</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="sidebar">
+          <div class="section-title">Explorer</div>
+          <div class="project-name" id="projectName"></div>
+          <div class="sidebar-tools">
+            <button id="refreshTree" type="button">Refresh</button>
+            <button id="newFile" type="button">New file</button>
+          </div>
+          <input id="projectSearch" class="search-input" type="search" placeholder="Search project" />
+          <div id="searchResults" class="search-results"></div>
+          <nav id="fileTree" class="file-tree"></nav>
+        </aside>
+
+        <section class="editor-area">
+          <div id="tabs" class="tabs"></div>
+          <div class="editor-toolbar">
+            <input id="editorSearch" class="search-input" type="search" placeholder="Find in file" />
+            <button id="saveFile" type="button">Save</button>
+            <span id="editorStatus" class="status-text"></span>
+          </div>
+          <div class="editor-wrap">
+            <pre id="highlightLayer" class="highlight-layer"></pre>
+            <textarea id="codeEditor" class="code-editor" spellcheck="false"></textarea>
+          </div>
+        </section>
+
+        <aside class="agent-panel">
+          <div class="section-title">Agent</div>
+          <div id="chatLog" class="chat-log"></div>
+          <form id="agentForm" class="agent-form">
+            <textarea id="agentTask" rows="4" placeholder="Ask the agent"></textarea>
+            <button type="submit">Run</button>
+          </form>
+          <div class="diff-header">
+            <span>Diff</span>
+            <label><input id="confirmDelete" type="checkbox" /> allow delete</label>
+          </div>
+          <div id="changesPane" class="changes-pane"></div>
+          <button id="applyChanges" class="apply-button" type="button">Apply selected</button>
+        </aside>
+      </main>
+    </div>
+
+    <dialog id="settingsDialog" class="settings-dialog">
+      <form method="dialog" class="settings-content">
+        <div class="settings-head">
+          <strong>Settings</strong>
+          <button value="close" type="submit">Close</button>
+        </div>
+        <label>Theme
+          <select id="themeMode">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+            <option value="custom">Custom</option>
+          </select>
+        </label>
+        <div id="colorSettings" class="color-grid"></div>
+        <label>Cloud base URL
+          <input id="cloudBaseUrl" type="text" spellcheck="false" />
+        </label>
+        <label>Cloud API key
+          <input id="cloudApiKey" type="password" autocomplete="off" />
+        </label>
+        <div class="settings-actions">
+          <button id="saveSettings" type="button">Save settings</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="/ide/assets/app.js"></script>
+  </body>
+</html>

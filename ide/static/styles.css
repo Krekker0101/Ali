@@ -1,0 +1,754 @@
+:root {
+  --background: #0f1115;
+  --panel: rgba(24, 26, 32, 0.68);
+  --panel2: rgba(36, 39, 48, 0.62);
+  --text: #f4f6fb;
+  --muted: #a5adbb;
+  --accent: #65d6ad;
+  --border: rgba(255, 255, 255, 0.13);
+  --danger: #ff6b7a;
+  --surface-strong: rgba(255, 255, 255, 0.08);
+  --surface-soft: rgba(255, 255, 255, 0.045);
+  --glass-line: rgba(255, 255, 255, 0.22);
+  --shadow: rgba(0, 0, 0, 0.34);
+  --shadow-soft: rgba(0, 0, 0, 0.2);
+  --blur: 24px;
+  --radius: 8px;
+  --speed: 180ms;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*::selection {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 960px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 16%, transparent), transparent 32%),
+    linear-gradient(315deg, color-mix(in srgb, var(--danger) 11%, transparent), transparent 34%),
+    linear-gradient(180deg, color-mix(in srgb, var(--background) 86%, var(--text) 14%) 0%, var(--background) 44%, color-mix(in srgb, var(--background) 92%, black) 100%);
+  color: var(--text);
+  font: 13px/1.45 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(color-mix(in srgb, var(--text) 4%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--text) 3%, transparent) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 78%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--text) 5%, transparent), transparent 18%, transparent 82%, color-mix(in srgb, var(--text) 4%, transparent));
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+select,
+input,
+textarea {
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  color: var(--text);
+  border-radius: var(--radius);
+  outline: none;
+  transition:
+    border-color var(--speed) ease,
+    background var(--speed) ease,
+    box-shadow var(--speed) ease,
+    transform var(--speed) ease;
+}
+
+button {
+  height: 30px;
+  padding: 0 11px;
+  cursor: pointer;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.045)),
+    var(--surface-soft);
+  box-shadow: inset 0 1px 0 var(--glass-line), 0 8px 20px var(--shadow-soft);
+}
+
+button:hover {
+  border-color: color-mix(in srgb, var(--accent) 58%, var(--border));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.07)),
+    color-mix(in srgb, var(--accent) 12%, var(--surface-soft));
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0) scale(0.99);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 78%, white);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent), inset 0 1px 0 var(--glass-line);
+}
+
+input,
+select {
+  height: 30px;
+  padding: 0 10px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: color-mix(in srgb, var(--muted) 78%, transparent);
+}
+
+textarea {
+  resize: none;
+}
+
+.app-shell {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 46px 1fr;
+  padding: 8px;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: app-enter 420ms ease forwards;
+}
+
+.topbar,
+.sidebar,
+.agent-panel,
+.tabs,
+.editor-toolbar,
+.settings-dialog,
+.message,
+.change-item {
+  backdrop-filter: blur(var(--blur)) saturate(1.42);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(1.42);
+}
+
+.topbar {
+  display: grid;
+  grid-template-columns: 190px minmax(260px, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.045)),
+    var(--panel);
+  box-shadow: 0 18px 42px var(--shadow), inset 0 1px 0 var(--glass-line);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.brand-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.16)),
+    linear-gradient(135deg, var(--accent), #f5c177);
+  color: #09100d;
+  font-size: 11px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 10px 22px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.workspace-form {
+  display: flex;
+  gap: 8px;
+}
+
+.workspace-form input {
+  width: 100%;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.top-actions select {
+  min-width: 120px;
+}
+
+.workspace {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 282px minmax(420px, 1fr) 366px;
+  gap: 8px;
+}
+
+.sidebar,
+.agent-panel,
+.editor-area {
+  min-height: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 18px 48px var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+.sidebar,
+.agent-panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.035)),
+    var(--panel);
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-area {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: 38px 48px 1fr;
+  background: color-mix(in srgb, var(--background) 72%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.section-title {
+  height: 34px;
+  padding: 10px 12px 8px;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.project-name {
+  padding: 11px 12px 7px;
+  font-weight: 720;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-tools,
+.editor-toolbar,
+.diff-header,
+.settings-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+}
+
+.sidebar-tools button {
+  flex: 1;
+}
+
+.search-input {
+  width: calc(100% - 20px);
+  margin: 0 10px 8px;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.file-tree,
+.search-results,
+.chat-log,
+.changes-pane,
+.highlight-layer,
+.code-editor,
+.tabs {
+  scrollbar-color: color-mix(in srgb, var(--accent) 34%, rgba(255, 255, 255, 0.18)) transparent;
+  scrollbar-width: thin;
+}
+
+.file-tree,
+.search-results {
+  overflow: auto;
+}
+
+.file-tree {
+  padding: 5px 6px 12px;
+  flex: 1;
+}
+
+.tree-node,
+.search-hit {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  min-height: 28px;
+  padding: 5px 8px;
+  color: var(--text);
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  text-align: left;
+  box-shadow: none;
+}
+
+.tree-node:hover,
+.search-hit:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(2px);
+}
+
+.tree-node.active {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 28%, transparent), rgba(255, 255, 255, 0.05));
+  border-color: color-mix(in srgb, var(--accent) 36%, var(--border));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.tree-children {
+  margin-left: 15px;
+}
+
+.node-icon {
+  color: var(--muted);
+  width: 18px;
+  text-align: center;
+}
+
+.node-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-results {
+  max-height: 160px;
+  padding: 0 6px 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.search-hit {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  animation: item-enter 220ms ease both;
+}
+
+.search-hit strong,
+.search-hit span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-hit span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.tabs {
+  display: flex;
+  overflow-x: auto;
+  gap: 5px;
+  padding: 5px 6px 0;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 124px;
+  max-width: 230px;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 7px 7px 0 0;
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    color var(--speed) ease,
+    background var(--speed) ease,
+    border-color var(--speed) ease,
+    transform var(--speed) ease;
+}
+
+.tab:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.tab.active {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.tab-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tab-close {
+  margin-left: auto;
+  color: var(--muted);
+}
+
+.editor-toolbar {
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.editor-toolbar .search-input {
+  width: 260px;
+  margin: 0;
+}
+
+.status-text {
+  min-width: 120px;
+  color: var(--muted);
+  text-align: right;
+}
+
+.editor-wrap {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--text) 3%, transparent), transparent 120px),
+    color-mix(in srgb, var(--background) 62%, transparent);
+}
+
+.highlight-layer,
+.code-editor {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 18px 20px;
+  overflow: auto;
+  border: 0;
+  border-radius: 0;
+  font: 13px/1.58 "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  tab-size: 2;
+  white-space: pre;
+}
+
+.highlight-layer {
+  color: var(--text);
+  pointer-events: none;
+}
+
+.code-editor {
+  background: transparent;
+  color: transparent;
+  caret-color: var(--accent);
+  outline: none;
+}
+
+.tok-keyword {
+  color: #83c7ff;
+}
+
+.tok-string {
+  color: #ffd18c;
+}
+
+.tok-comment {
+  color: #8f9bac;
+}
+
+.tok-number {
+  color: #d9b2ff;
+}
+
+.tok-type {
+  color: #72e0c0;
+}
+
+.chat-log {
+  flex: 1;
+  min-height: 120px;
+  overflow: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.message {
+  position: relative;
+  padding: 10px 11px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.038)),
+    rgba(22, 24, 30, 0.58);
+  box-shadow: 0 14px 28px var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  white-space: pre-wrap;
+  animation: message-enter 240ms ease both;
+}
+
+.message.user {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 14%, rgba(255, 255, 255, 0.09)), rgba(255, 255, 255, 0.035)),
+    rgba(22, 24, 30, 0.56);
+}
+
+.agent-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.agent-form textarea {
+  min-height: 80px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.agent-form button {
+  height: auto;
+  min-width: 58px;
+}
+
+body.agent-running .agent-form button {
+  animation: pulse-button 920ms ease-in-out infinite;
+}
+
+.diff-header {
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.diff-header label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+
+.changes-pane {
+  min-height: 150px;
+  max-height: 34vh;
+  overflow: auto;
+  padding: 12px;
+}
+
+.change-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.035)),
+    rgba(23, 25, 31, 0.68);
+  box-shadow: 0 14px 32px var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  animation: item-enter 260ms ease both;
+}
+
+.change-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.change-title span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.change-title code {
+  color: var(--accent);
+}
+
+.diff {
+  margin: 0;
+  padding: 11px;
+  overflow: auto;
+  color: var(--text);
+  font: 12px/1.52 "Cascadia Code", Consolas, monospace;
+}
+
+.diff .add {
+  color: #7ee7b5;
+}
+
+.diff .del {
+  color: #ff8490;
+}
+
+.apply-button {
+  margin: 0 10px 10px;
+  min-height: 34px;
+}
+
+.settings-dialog {
+  width: 460px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06)),
+    rgba(18, 20, 26, 0.78);
+  color: var(--text);
+  border-radius: var(--radius);
+  box-shadow: 0 34px 110px var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.settings-dialog::backdrop {
+  background: rgba(5, 7, 10, 0.56);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.settings-content {
+  display: grid;
+  gap: 12px;
+}
+
+.settings-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settings-dialog label {
+  display: grid;
+  gap: 5px;
+  color: var(--muted);
+}
+
+.color-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.color-row {
+  display: grid;
+  grid-template-columns: 1fr minmax(42px, 138px);
+  gap: 6px;
+  align-items: center;
+}
+
+.color-row input {
+  width: 100%;
+  padding: 0 2px;
+}
+
+@keyframes app-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes message-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes item-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-button {
+  0%,
+  100% {
+    box-shadow: inset 0 1px 0 var(--glass-line), 0 8px 20px var(--shadow-soft);
+  }
+  50% {
+    box-shadow: inset 0 1px 0 var(--glass-line), 0 0 0 4px color-mix(in srgb, var(--accent) 16%, transparent), 0 14px 32px color-mix(in srgb, var(--accent) 16%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+@media (max-width: 1100px) {
+  body {
+    min-width: 720px;
+  }
+
+  .workspace {
+    grid-template-columns: 240px minmax(360px, 1fr);
+  }
+
+  .agent-panel {
+    position: absolute;
+    right: 8px;
+    top: 62px;
+    bottom: 8px;
+    width: 360px;
+    box-shadow: -18px 0 42px var(--shadow);
+  }
+}
